@@ -43,10 +43,21 @@ def index(req):
     return Response ( "hello")
 
 
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def get_students(req):
+#     usr= req.user
+#     my_model= usr.student_set.all()
+#     serializer = StudentSerializer(my_model, many=True)
+#     return Response(serializer.data)
+
+
 @permission_classes([IsAuthenticated])
 class MyStudentView(APIView):
     def get(self, request):
-        my_model = Student.objects.all()
+        usr= request.user
+        print (usr)
+        my_model= usr.student_set.all()
         serializer = StudentSerializer(my_model, many=True)
         return Response(serializer.data)
     
